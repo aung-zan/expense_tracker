@@ -9,9 +9,9 @@ class ExpenseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function list()
     {
-        //
+        return view('expense.list');
     }
 
     /**
@@ -19,7 +19,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        //
+        return view('expense.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class ExpenseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('expense.edit');
     }
 
     /**

@@ -8,7 +8,7 @@ class AuthController extends Controller
 {
     public function loginForm()
     {
-        //
+        return view('layouts.auth');
     }
 
     public function login()
@@ -16,17 +16,7 @@ class AuthController extends Controller
         //
     }
 
-    public function signupForm()
-    {
-        //
-    }
-
     public function signup()
-    {
-        //
-    }
-
-    public function forgotPassword()
     {
         //
     }

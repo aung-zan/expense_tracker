@@ -11,7 +11,7 @@ class IncomeController extends Controller
      */
     public function list()
     {
-        //
+        return view('income.list');
     }
 
     /**
@@ -19,7 +19,7 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        //
+        return view('income.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class IncomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('income.edit');
     }
 
     /**

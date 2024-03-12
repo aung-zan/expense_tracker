@@ -11,7 +11,7 @@ class ExpenseCategoryController extends Controller
      */
     public function list()
     {
-        //
+        return view('expense_category.list');
     }
 
     /**
@@ -19,7 +19,7 @@ class ExpenseCategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('expense_category.create');
     }
 
     /**
@@ -35,7 +35,7 @@ class ExpenseCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view('expense_category.edit');
     }
 
     /**
