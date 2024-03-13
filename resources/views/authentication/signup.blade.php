@@ -10,18 +10,52 @@
         </div>
 
         <div class="login__block__body">
-            <form action="{{ route("signUp") }}">
+            <form action="{{ route("signUp") }}" method="POST">
                 @csrf
+
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Name">
+                    @php
+                        $nameClass = 'form-control';
+                        if ($errors->has('name')) {
+                            $nameClass = 'form-control is-invalid';
+                        }
+                    @endphp
+                    <input type="text" class="{{ $nameClass }}" name="name" placeholder="Name">
+                    @if ($errors->has('name'))
+                        <div class="invalid-feedback text-left">
+                            {{ $errors->first('name') }}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group form-group--centered">
-                    <input type="text" class="form-control" placeholder="Email Address">
+                    @php
+                        $emailClass = 'form-control';
+                        if ($errors->has('email')) {
+                            $emailClass = 'form-control is-invalid';
+                        }
+                    @endphp
+                    <input type="text" class="{{ $emailClass }}" name="email" placeholder="Email Address">
+                    @if ($errors->has('email'))
+                        <div class="invalid-feedback text-left">
+                            {{ $errors->first('email') }}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group form-group--centered">
-                    <input type="password" class="form-control" placeholder="Password">
+                    @php
+                        $passwordClass = 'form-control';
+                        if ($errors->has('password')) {
+                            $passwordClass = 'form-control is-invalid';
+                        }
+                    @endphp
+                    <input type="password" class="{{ $passwordClass }}" name="password" placeholder="Password">
+                    @if ($errors->has('password'))
+                        <div class="invalid-feedback text-left">
+                            {{ $errors->first('password') }}
+                        </div>
+                    @endif
                 </div>
 
                 <div class="form-group">
@@ -50,6 +84,10 @@
                     <i class="zmdi zmdi-google"></i>
                     Sign Up With Google
                 </button>
+            </div>
+
+            <div class="form-group">
+                <a href="{{ route('loginForm') }}">Already have an account? Login</a>
             </div>
         </div>
     </div>

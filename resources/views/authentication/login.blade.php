@@ -75,6 +75,10 @@
                     Login With Google
                 </button>
             </div>
+
+            <div class="form-group">
+                <a href="{{ route('signUpForm') }}">Doesn't have an account? Create New</a>
+            </div>
         </div>
     </div>
 @endsection
