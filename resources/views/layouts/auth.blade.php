@@ -15,11 +15,8 @@
     <body data-sa-theme="1">
         <div class="login">
 
-            @include('authentication.login')
-
-            @include('authentication.signup')
-
-            @include('authentication.forgot_password')
+            {{-- @include('authentication.forgot_password') --}}
+            @yield('content')
         </div>
 
         <!-- Javascript -->
