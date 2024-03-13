@@ -20,14 +20,12 @@ Route::get('/', function () {
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'loginForm')->name('loginForm');
     Route::post('/login', 'login')->name('login');
-    Route::get('/signup', 'signupForm')->name('signupForm');
     Route::post('/signup', 'signup')->name('signup');
-    Route::get('/forgot_password', 'forgotPassword')->name('forgotPassword');
-    // Route::get('/login', 'loginForm');
+    Route::post('/reset_password', 'resetPassword')->name('resetPassword');
 });
 
 Route::controller(DashboardController::class)->group(function () {
-    Route::get('dashboard', '')->name('dashboard');
+    Route::get('dashboard', 'dashboard')->name('dashboard');
 });
 
 Route::prefix('income')->group(function () {
