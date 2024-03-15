@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('expense_categories', function (Blueprint $table) {
+        Schema::create('income_amounts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained(table: 'users');
-            $table->string('name', 255);
+            $table->foreignId('income_id')->constrained(table: 'incomes');
+            $table->integer('amount');
+            $table->date('income_date');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('expense_categories');
+        Schema::dropIfExists('income_amounts');
     }
 };
