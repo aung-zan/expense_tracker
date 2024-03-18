@@ -8,12 +8,22 @@
         <link rel="stylesheet" href="/css/library/material-design-iconic-font.min.css">
         <link rel="stylesheet" href="/css/library/animate.min.css">
         <link rel="stylesheet" href="/css/library/jquery.scrollbar.css">
+        @stack('css-library')
 
         <!-- App styles -->
         <link rel="stylesheet" href="/css/app.min.css">
+        @stack('css')
+
+        <!-- Vendors javascript -->
+        <script src="/js/library/jquery.min.js"></script>
+        <script src="/js/library/popper.min.js"></script>
+        <script src="/js/library/bootstrap.min.js"></script>
+        <script src="/js/library/jquery.scrollbar.min.js"></script>
+        <script src="/js/library/jquery-scrollLock.min.js"></script>
+        @stack('js-library')
     </head>
 
-    <body data-sa-theme="1">
+    <body data-sa-theme="3">
         <main class="main">
             <div class="page-loader">
                 <div class="page-loader__spinner">
@@ -48,15 +58,8 @@
             </section>
         </main>
 
-        <!-- Javascript -->
-        <!-- Vendors -->
-        <script src="/js/library/jquery.min.js"></script>
-        <script src="/js/library/popper.min.js"></script>
-        <script src="/js/library/bootstrap.min.js"></script>
-        <script src="/js/library/jquery.scrollbar.min.js"></script>
-        <script src="/js/library/jquery-scrollLock.min.js"></script>
-
         <!-- App functions and actions -->
         <script src="/js/app.min.js"></script>
+        @stack('js')
     </body>
 </html>

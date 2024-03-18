@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Income extends Model
+class IncomeAmount extends Model
 {
     use HasFactory;
 
@@ -16,8 +17,9 @@ class Income extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'name',
+        'income_id',
+        'amount',
+        'income_date',
     ];
 
     /**
@@ -30,8 +32,15 @@ class Income extends Model
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 
-    public function incomeAmount(): HasMany
+    public function incomeDate(): Attribute
     {
-        return $this->hasMany(IncomeAmount::class);
+        return Attribute::make(
+            get: fn (string $value) => date('Y-m', strtotime($value)),
+        );
+    }
+
+    public function income(): BelongsTo
+    {
+        return $this->belongsTo(Income::class);
     }
 }
