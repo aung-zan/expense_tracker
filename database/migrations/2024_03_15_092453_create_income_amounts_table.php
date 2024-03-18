@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('income_id')->constrained(table: 'incomes');
             $table->integer('amount');
-            $table->date('income_date');
+            $table->string('income_date');
             $table->timestamps();
         });
     }

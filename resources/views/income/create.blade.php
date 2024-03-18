@@ -20,18 +20,25 @@
             <div class="card-body">
                 <h4 class="card-title">Income</h4>
 
+                @if ($errors->has('income'))
+                    <div class="alert alert-danger alert-dismissible fade show col-sm-7">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                        {{ $errors->first('income') }}
+                    </div>
+                @endif
+
                 <form action="{{ route('incomeStore') }}" method="POST">
                     @csrf
                     <div class="row">
                         <label class="col-sm-2 col-form-label">Income Name</label>
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <select class="select2" name="incomeId" id="incomeId">
-                                    <option value="1">Subaru</option>
-                                    <option value="2">Mitsubishi</option>
-                                    <option value="3">Scion</option>
-                                    <option value="4">Daihatsu</option>
-                                    <option value="5">Hino</option>
+                                <select class="select2" name="income_id" id="incomeId">
+                                    @foreach ($incomes as $income)
+                                        <option value="{{ $income->id }}">{{ $income->name }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -48,7 +55,7 @@
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <input type="text" name="incomeName" class="form-control" placeholder="New Income Name">
+                                <input type="text" name="name" class="form-control" placeholder="New Income Name">
                             </div>
                         </div>
                         <div class="col-sm-1">
@@ -67,9 +74,14 @@
                                 <div class="input-group">
                                     <span class="input-group-addon">$</span>
                                     <div class="form-group">
-                                        <input type="number" name="amount" class="form-control" placeholder="Income Name">
+                                        <input type="number" name="amount" class="form-control @error('amount') is-invalid  @enderror" placeholder="Income Amount">
                                     </div>
                                 </div>
+                                @error('amount')
+                                    <div class="invalid-feedback text-left">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -81,10 +93,15 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="date" id="datePicker" placeholder="Pick a date">
+                                        <input type="text" class="form-control @error('income_date') is-invalid  @enderror" name="income_date" id="datePicker" placeholder="Pick a date">
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
+                                @error('income_date')
+                                    <div class="invalid-feedback text-left">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -106,5 +123,9 @@
 @endpush
 
 @push('js')
+    <script>
+        var data = {!! json_encode($incomes) !!};
+    </script>
+
     <script src="/js/app/income/create.js"></script>
 @endpush

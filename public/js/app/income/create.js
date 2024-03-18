@@ -1,6 +1,6 @@
 $(document).ready(function () {
-  $("[name*='incomeName']").hide();
-  $("[name*='incomeName']").attr("disabled", "disabled");
+  $("[name*='name']").hide();
+  $("[name*='name']").attr("disabled", "disabled");
   $("#removeNewIncome").hide();
 
   $("#datePicker").flatpickr({
@@ -22,8 +22,8 @@ $(document).ready(function () {
     $(this).hide();
     $("#incomeId").attr("disabled", "disabled");
 
-    $("[name*='incomeName']").show();
-    $("[name*='incomeName']").removeAttr("disabled");
+    $("[name*='name']").show();
+    $("[name*='name']").removeAttr("disabled");
     $("#removeNewIncome").show();
   });
 
@@ -32,8 +32,8 @@ $(document).ready(function () {
    */
   $("#removeNewIncome").on("click", function () {
     $(this).hide();
-    $("[name*='incomeName']").hide();
-    $("[name*='incomeName']").attr("disabled", "disabled");
+    $("[name*='name']").hide();
+    $("[name*='name']").attr("disabled", "disabled");
 
     $("#incomeId").removeAttr("disabled");
     $("#newIncome").show();

@@ -3,7 +3,7 @@
         <i class="zmdi zmdi-menu"></i>
     </div>
 
-    <div class="logo hidden-sm-down">
+    <div class="logo">
         <h1><a href="index.html">Expense Tracker App</a></h1>
     </div>
 
@@ -15,14 +15,12 @@
     </form> --}}
 
     <ul class="top-nav">
-        <li class="hidden-xl-up"><a href="" data-sa-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
-
         <li class="hidden-xs-down">
             <a href="" class="top-nav__themes" data-sa-action="aside-open" data-sa-target=".themes"><i class="zmdi zmdi-palette"></i></a>
         </li>
     </ul>
 
-    <div class="clock hidden-md-down">
+    <div class="clock hidden-xs-down">
         <div class="time">
             <span class="time__hours"></span>
             <span class="time__min"></span>

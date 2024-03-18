@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="/css/app.min.css">
     </head>
 
-    <body data-sa-theme="1">
+    <body data-sa-theme="3">
         <div class="login">
 
             {{-- @include('authentication.forgot_password') --}}

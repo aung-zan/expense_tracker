@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Income extends Model
 {
@@ -17,6 +18,20 @@ class Income extends Model
     protected $fillable = [
         'user_id',
         'name',
-        'amount',
     ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
+
+    public function incomeAmount(): HasMany
+    {
+        return $this->hasMany(IncomeAmount::class);
+    }
 }

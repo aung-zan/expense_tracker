@@ -44,8 +44,8 @@ Route::prefix('/')->group(function () {
 
                 Route::prefix('{income_id}')->group(function () {
                     Route::get('edit', 'edit')->name('incomeEdit');
-                    Route::patch('update', 'update')->name('incomeUpdate');
-                    Route::delete('delete', 'delete')->name('incomeDelete');
+                    Route::put('update', 'update')->name('incomeUpdate');
+                    Route::delete('delete', 'destroy')->name('incomeDelete');
                 });
             });
         });
@@ -56,8 +56,8 @@ Route::prefix('/')->group(function () {
                 Route::get('create', 'create')->name('expenseCreate');
                 Route::post('create', 'store')->name('expenseStore');
                 Route::get('edit', 'edit')->name('expenseEdit');
-                Route::patch('update', 'update')->name('expenseUpdate');
-                Route::delete('delete', 'delete')->name('expenseDelete');
+                Route::put('update', 'update')->name('expenseUpdate');
+                Route::delete('delete', 'destroy')->name('expenseDelete');
             });
         });
 
@@ -67,8 +67,8 @@ Route::prefix('/')->group(function () {
                 Route::get('create', 'create')->name('expenseCategoryCreate');
                 Route::post('create', 'store')->name('expenseCategoryStore');
                 Route::get('edit', 'edit')->name('expenseCategoryEdit');
-                Route::patch('update', 'update')->name('expenseCategoryUpdate');
-                Route::delete('delete', 'delete')->name('expenseCategoryDelete');
+                Route::put('update', 'update')->name('expenseCategoryUpdate');
+                Route::delete('delete', 'destroy')->name('expenseCategoryDelete');
             });
         });
     });
