@@ -15,12 +15,6 @@
             <h1>Edit Income</h1>
         </header>
 
-        @php
-            if ($errors->any()) {
-                \Log::info($errors);
-            }
-        @endphp
-
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Income</h4>

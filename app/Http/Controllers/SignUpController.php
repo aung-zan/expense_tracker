@@ -24,7 +24,6 @@ class SignUpController extends Controller
     public function signUp(SignUpRequest $request)
     {
         $data = $request->except('_token');
-        \Log::info($data);
 
         $user = $this->userRepository->createUser($data);
 
