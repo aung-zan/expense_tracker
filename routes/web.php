@@ -55,9 +55,12 @@ Route::prefix('/')->group(function () {
                 Route::get('list', 'list')->name('expenseList');
                 Route::get('create', 'create')->name('expenseCreate');
                 Route::post('create', 'store')->name('expenseStore');
-                Route::get('edit', 'edit')->name('expenseEdit');
-                Route::put('update', 'update')->name('expenseUpdate');
-                Route::delete('delete', 'destroy')->name('expenseDelete');
+
+                Route::prefix('{expense_id}')->group(function () {
+                    Route::get('edit', 'edit')->name('expenseEdit');
+                    Route::put('update', 'update')->name('expenseUpdate');
+                    Route::delete('delete', 'destroy')->name('expenseDelete');
+                });
             });
         });
 
