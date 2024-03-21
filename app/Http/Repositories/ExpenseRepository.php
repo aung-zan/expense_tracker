@@ -72,4 +72,53 @@ class ExpenseRepository
             ->where('id', $id)
             ->update($data);
     }
+
+    /**
+     * Get all expenses.
+     */
+    public function getAllExpense(int $userId, string $date): Collection
+    {
+        $expenses = $this->expense->leftJoin(
+            'expense_categories',
+            'expenses.expense_category_id',
+            '=',
+            'expense_categories.id'
+        )
+            ->where('expenses.user_id', $userId)
+            ->where('expense_date', $date)
+            ->select('expenses.*', 'expense_categories.name as category')
+            ->get();
+
+        return $expenses;
+    }
+
+    public function createExpense(array $data): void
+    {
+        $this->expense->create($data);
+    }
+
+    public function getExpense(int $id, int $userId): Expense
+    {
+        $expense = $this->expense->where('id', $id)
+            ->where('user_id', $userId)
+            ->firstOrFail();
+
+        return $expense;
+    }
+
+    public function updateExpense(array $data, int $id, int $userId): void
+    {
+        $this->expense->where('id', $id)
+            ->where('user_id', $userId)
+            ->update($data);
+    }
+
+    public function deleteExpense(int $id, int $userId): void
+    {
+        $expense = $this->expense->where('id', $id)
+            ->where('user_id', $userId)
+            ->firstOrFail();
+
+        $expense->delete();
+    }
 }
