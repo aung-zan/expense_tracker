@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('income_amounts', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('income_id')->constrained(table: 'incomes');
+            $table->foreignId('user_id')->constrained(table: 'users');
+            $table->foreignId('income_type_id')->constrained(table: 'income_types');
             $table->integer('amount');
             $table->string('income_date');
             $table->timestamps();
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('income_amounts');
+        Schema::dropIfExists('incomes');
     }
 };

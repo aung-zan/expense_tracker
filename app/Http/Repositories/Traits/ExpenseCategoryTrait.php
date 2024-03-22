@@ -8,7 +8,7 @@ use App\Models\ExpenseCategory;
 trait ExpenseCategoryTrait
 {
     /**
-     * Get all expense categories.
+     * Get all expense_type.
      *
      * @param int $userId
      * @return Collection
@@ -22,7 +22,7 @@ trait ExpenseCategoryTrait
     }
 
     /**
-     * Create a new expense category.
+     * Create a new expense_type.
      *
      * @param array $data
      * @return void
@@ -33,7 +33,7 @@ trait ExpenseCategoryTrait
     }
 
     /**
-     * Get a expense_category by id.
+     * Get an expense_type by id.
      *
      * @param int $userId
      * @param int $id
@@ -49,7 +49,7 @@ trait ExpenseCategoryTrait
     }
 
     /**
-     * Update a expense_category by id.
+     * Update an expense_type by id.
      *
      * @param array $data
      * @param int $userId

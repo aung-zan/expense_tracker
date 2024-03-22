@@ -21,8 +21,10 @@ class IncomeController extends Controller
      */
     public function list(Request $request)
     {
+        $userId = auth()->user()->id;
         $date = $request->get('date') ?? Carbon::now()->format('Y-m');
-        $incomeAmounts = $this->incomeRepository->getIncomeAmount($date);
+
+        $incomeAmounts = $this->incomeRepository->getAllIncome($userId, $date);
 
         return view('income.list', [
             'incomeAmounts' => $incomeAmounts,
@@ -35,10 +37,12 @@ class IncomeController extends Controller
      */
     public function create()
     {
-        $incomes = $this->incomeRepository->getIncome();
+        $userId = auth()->user()->id;
+
+        $incomeTypes = $this->incomeRepository->getAllIncomeType($userId);
 
         return view('income.create', [
-            'incomes' => $incomes,
+            'incomeTypes' => $incomeTypes,
         ]);
     }
 
@@ -48,7 +52,9 @@ class IncomeController extends Controller
     public function store(IncomeRequest $request)
     {
         $data = $request->validated();
-        $this->incomeRepository->addNewAmount($data);
+        $data['user_id'] = auth()->user()->id;
+
+        $this->incomeRepository->createNewIncome($data);
 
         return redirect()->route('incomeList');
     }
@@ -58,10 +64,14 @@ class IncomeController extends Controller
      */
     public function edit(int $id)
     {
-        $incomeAmount = $this->incomeRepository->getIncomeAmountById($id);
+        $userId = auth()->user()->id;
+
+        $incomeTypes = $this->incomeRepository->getAllIncomeType($userId);
+        $income = $this->incomeRepository->getIncome($id, $userId);
 
         return view('income.edit', [
-            'incomeAmount' => $incomeAmount,
+            'incomeTypes' => $incomeTypes,
+            'income' => $income,
         ]);
     }
 
@@ -70,8 +80,10 @@ class IncomeController extends Controller
      */
     public function update(IncomeRequest $request, int $id)
     {
+        $userId = auth()->user()->id;
         $data = $request->validated();
-        $this->incomeRepository->updateIncomeAmountById($data, $id);
+
+        $this->incomeRepository->updateIncome($data, $id, $userId);
 
         return redirect()->route('incomeList');
     }
@@ -81,7 +93,9 @@ class IncomeController extends Controller
      */
     public function destroy(int $id)
     {
-        $this->incomeRepository->deleteIncome($id);
+        $userId = auth()->user()->id;
+
+        $this->incomeRepository->deleteIncome($id, $userId);
 
         return redirect()->route('incomeList');
     }

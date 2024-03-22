@@ -2,142 +2,124 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Repositories\Traits\IncomeTypeTrait;
 use App\Models\Income;
-use App\Models\IncomeAmount;
+use App\Models\IncomeType;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\DB;
 
 class IncomeRepository
 {
-    private $income;
-    private $incomeAmount;
+    use IncomeTypeTrait;
 
-    public function __construct(Income $income, IncomeAmount $incomeAmount)
+    private $income;
+    private $incomeType;
+
+    public function __construct(Income $income, IncomeType $incomeType)
     {
         $this->income = $income;
-        $this->incomeAmount = $incomeAmount;
+        $this->incomeType = $incomeType;
     }
 
     /**
-     * Get income amounts by user_id and income's dates.
+     * Get all income.
      *
+     * @param int $userId
      * @param string $date
      * @return Collection
      */
-    public function getIncomeAmount(string $date): Collection
+    public function getAllIncome(int $userId, string $date): Collection
     {
-        $userId = auth()->user()->id;
-        $incomeAmounts = $this->incomeAmount->leftJoin('incomes', 'income_amounts.income_id', '=', 'incomes.id')
+        $incomes = $this->income->leftJoin(
+            'income_types',
+            'incomes.income_type_id',
+            '=',
+            'income_types.id'
+        )
             ->where('incomes.user_id', $userId)
-            ->where('income_amounts.income_date', $date)
-            ->select('income_amounts.*', 'incomes.name')
-            ->get();
-
-        return $incomeAmounts;
-    }
-
-    /**
-     * Create a new income.
-     *
-     * @param array $data
-     * @return Income
-     */
-    private function createNewIncome(array $data): Income
-    {
-        $income = $this->income->create($data);
-
-        return $income;
-    }
-
-    /**
-     * Get all incomes by user_id.
-     *
-     * @return Income
-     */
-    public function getIncome(): Collection
-    {
-        $userId = auth()->user()->id;
-        $incomes = $this->income->where('user_id', $userId)
+            ->where('income_date', $date)
+            ->select('incomes.*', 'income_types.name')
             ->get();
 
         return $incomes;
     }
 
     /**
-     * Get income info by income's id and date.
+     * Get an income info by income's id and date.
      *
-     * @param id $incomeId
+     * @param id $userId
+     * @param id $incomeTypeId
      * @param string $incomeDate
+     * @return Income|null
+     */
+    public function getIncomeByIdAndDate(array $data): Income|null
+    {
+        $query = $this->income->where('user_id', $data['user_id'])
+            ->where('income_type_id', $data['income_type_id'])
+            ->where('income_date', $data['income_date']);
+
+        if (array_key_exists('income_id', $data)) {
+            $query = $query->where('id', '<>', $data['income_id']);
+        }
+
+        $income = $query->first();
+
+        return $income;
+    }
+
+    /**
+     * Create a new income.
+     *
+     * @param array $data
+     * @return void
+     */
+    public function createNewIncome(array $data): void
+    {
+        $this->income->create($data);
+    }
+
+    /**
+     * Get an income by id.
+     *
+     * @param int $id
+     * @param int $userId
      * @return Income
      */
-    public function getIncomeByIdAndDate($incomeId, $incomeDate): IncomeAmount|null
+    public function getIncome(int $id, int $userId): Income
     {
-        $income = $this->incomeAmount->where('income_id', $incomeId)
-            ->where('income_date', $incomeDate)
-            ->first();
+        $income = $this->income->where('id', $id)
+            ->where('user_id', $userId)
+            ->firstOrFail();
 
         return $income;
     }
 
     /**
-     * Add new amount for income.
-     *
-     * @param array $data
-     * @return void
-     */
-    public function addNewAmount(array $data): void
-    {
-        DB::transaction(function () use ($data) {
-            if (array_key_exists('name', $data)) {
-                $data['user_id'] = auth()->user()->id;
-                $newIncome = $this->createNewIncome($data);
-                $data['income_id'] = $newIncome->id;
-            }
-
-            $this->incomeAmount->create($data);
-        });
-    }
-
-    /**
-     * Get the income and income amount via income amount id.
-     *
-     * @param int $id
-     * @return IncomeAmount
-     */
-    public function getIncomeAmountById(int $id): IncomeAmount
-    {
-        $income = $this->incomeAmount->where('id', $id)
-            ->with('income')
-            ->first();
-
-        return $income;
-    }
-
-    /**
-     * Update the income amount data via income amount id.
+     * Update an income by id.
      *
      * @param array $data
      * @param int $id
+     * @param int $userId
      * @return void
      */
-    public function updateIncomeAmountById(array $data, int $id): void
+    public function updateIncome(array $data, int $id, int $userId): void
     {
-        $this->incomeAmount->where('id', $id)
-            ->update([
-                'amount' => $data['amount'],
-                'income_date' => $data['income_date'],
-            ]);
+        $this->income->where('id', $id)
+            ->where('user_id', $userId)
+            ->update($data);
     }
 
     /**
-     * Delete the income amount by id.
+     * Delete an income by id.
      *
      * @param int $id
      * @return void
      */
-    public function deleteIncome(int $id): void
+    public function deleteIncome(int $id, int $userId): void
     {
-        $incomeAmount = $this->incomeAmount->findOrFail($id);
-        $incomeAmount->delete();
+        $income = $this->income->where('id', $id)
+            ->where('user_id', $userId)
+            ->firstOrFail();
+
+        $income->delete();
     }
 }

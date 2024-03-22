@@ -20,61 +20,73 @@
             <div class="card-body">
                 <h4 class="card-title">Income</h4>
 
-                @if ($errors->has('income'))
+                @error('income')
                     <div class="alert alert-danger alert-dismissible fade show col-sm-7">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        {{ $errors->first('income') }}
+                        {{ $message }}
                     </div>
-                @endif
+                @enderror
 
                 <form action="{{ route('incomeStore') }}" method="POST">
                     @csrf
                     <div class="row">
-                        <label class="col-sm-2 col-form-label">Income Name</label>
+                        <label class="col-sm-2 col-form-label">Income Type</label>
+
                         <div class="col-sm-5">
-                            <div class="form-group">
-                                <select class="select2" name="income_id" id="incomeId">
-                                    @foreach ($incomes as $income)
-                                        <option value="{{ $income->id }}">{{ $income->name }}</option>
+                            <div class="form-group income-type">
+                                <select class="select2" name="income_type_id" id="income-type-id">
+                                    <option value="">---</option>
+                                    @foreach ($incomeTypes as $incomeType)
+                                        <option value="{{ $incomeType['id'] }}"
+                                            {{ ($incomeType['id'] == old('income_type_id')) ? "selected" : "" }}
+                                        >{{ $incomeType['name'] }}</option>
                                     @endforeach
                                 </select>
+                                @error('income_type_id')
+                                    <div class="invalid-feedback text-left">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group income" hidden>
+                                <input type="text" name="name" id="income-name" class="form-control">
+                                <div class="invalid-feedback text-left" hidden></div>
                             </div>
                         </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-light btn--icon" id="newIncome">
+
+                        <div class="col-sm-5">
+                            <div class="form-group income-type">
+                                <button type="button" class="btn btn-info btn--icon" id="add">
                                     <i class="zmdi zmdi-plus"></i>
                                 </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <input type="text" name="name" class="form-control" placeholder="New Income Name">
-                            </div>
-                        </div>
-                        <div class="col-sm-1">
-                            <div class="form-group">
-                                <button type="button" class="btn btn-light btn--icon" id="removeNewIncome">
-                                    <i class="zmdi zmdi-minus"></i>
+                                <button type="button" class="btn btn-info btn--icon" id="edit" hidden>
+                                    <i class="zmdi zmdi-edit"></i>
+                                </button>
+                                <button type="button" class="btn btn-info btn--icon" id="delete" hidden>
+                                    <i class="zmdi zmdi-delete"></i>
                                 </button>
                             </div>
+                            <div class="form-group income" hidden>
+                                <button type="button" class="btn btn-secondary mr-2" id="cancel">Cancel</button>
+                                <button type="button" class="btn btn-success" id="save">Save</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row mt-5">
                         <label class="col-sm-2 col-form-label">Income Amount</label>
                         <div class="col-sm-5">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon">$</span>
                                     <div class="form-group">
-                                        <input type="number" name="amount" class="form-control @error('amount') is-invalid  @enderror" placeholder="Income Amount">
+                                        <input type="number" name="amount"
+                                            value="{{ old('amount') }}"
+                                            class="form-control @error('amount') is-invalid  @enderror"
+                                            placeholder="Income Amount"
+                                        >
                                     </div>
                                 </div>
                                 @error('amount')
@@ -93,7 +105,11 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
                                     <div class="form-group">
-                                        <input type="text" class="form-control @error('income_date') is-invalid  @enderror" name="income_date" id="datePicker" placeholder="Pick a date">
+                                        <input type="text" name="income_date" id="datePicker"
+                                            value="{{ old('income_date') }}"
+                                            class="form-control @error('income_date') is-invalid  @enderror"
+                                            placeholder="Pick a date"
+                                        >
                                         <i class="form-group__bar"></i>
                                     </div>
                                 </div>
@@ -124,7 +140,11 @@
 
 @push('js')
     <script>
-        var data = {!! json_encode($incomes) !!};
+        var data = {!! json_encode($incomeTypes) !!};
+        var createURL = {!! json_encode(route("incomeTypeStore")) !!};
+        var updateURL = {!! json_encode(route("incomeTypeUpdate", "###")) !!};
+        var deleteURL = {!! json_encode(route("incomeTypeDelete", "###")) !!};
+        var token = {!! json_encode(csrf_token()) !!};
     </script>
 
     <script src="/js/app/income/create.js"></script>

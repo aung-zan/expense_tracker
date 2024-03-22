@@ -36,6 +36,17 @@ Route::prefix('/')->group(function () {
             Route::get('dashboard', 'dashboard')->name('dashboard');
         });
 
+        Route::prefix('income_type')->group(function () {
+            Route::controller(IncomeTypeController::class)->group(function () {
+                Route::post('create', 'store')->name('incomeTypeStore');
+
+                Route::prefix('{income_type_id}')->group(function () {
+                    Route::put('update', 'update')->name('incomeTypeUpdate');
+                    Route::delete('delete', 'destroy')->name('incomeTypeDelete');
+                });
+            });
+        });
+
         Route::prefix('income')->group(function () {
             Route::controller(IncomeController::class)->group(function () {
                 Route::get('list', 'list')->name('incomeList');

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Income extends Model
 {
@@ -17,7 +17,9 @@ class Income extends Model
      */
     protected $fillable = [
         'user_id',
-        'name',
+        'income_type_id',
+        'amount',
+        'income_date',
     ];
 
     /**
@@ -30,8 +32,8 @@ class Income extends Model
         'updated_at' => 'datetime:Y-m-d H:i:s',
     ];
 
-    public function incomeAmount(): HasMany
+    public function incomeType(): BelongsTo
     {
-        return $this->hasMany(IncomeAmount::class);
+        return $this->belongsTo(IncomeType::class);
     }
 }
