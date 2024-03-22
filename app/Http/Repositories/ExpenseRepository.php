@@ -2,12 +2,15 @@
 
 namespace App\Http\Repositories;
 
+use App\Http\Repositories\Traits\ExpenseCategoryTrait;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use Illuminate\Database\Eloquent\Collection;
 
 class ExpenseRepository
 {
+    use ExpenseCategoryTrait;
+
     private $expense;
     private $expenseCategory;
 
@@ -15,62 +18,6 @@ class ExpenseRepository
     {
         $this->expense = $expense;
         $this->expenseCategory = $expenseCategory;
-    }
-
-    /**
-     * Get all expense categories.
-     *
-     * @param int $userId
-     * @return Collection
-     */
-    public function getAllExpenseCategory(int $userId): Collection
-    {
-        $expenseCategories = $this->expenseCategory->where('user_id', $userId)
-            ->get();
-
-        return $expenseCategories;
-    }
-
-    /**
-     * Create new expense category.
-     *
-     * @param array $data
-     * @return void
-     */
-    public function createExpenseCategory(array $data): void
-    {
-        $this->expenseCategory->create($data);
-    }
-
-    /**
-     * Get expense_category by id.
-     *
-     * @param int $userId
-     * @param int $id
-     * @return ExpenseCategory
-     */
-    public function getExpenseCategory(int $userId, int $id): ExpenseCategory
-    {
-        $expenseCategory = $this->expenseCategory->where('user_id', $userId)
-            ->where('id', $id)
-            ->firstOrFail();
-
-        return $expenseCategory;
-    }
-
-    /**
-     * Update expense category by id.
-     *
-     * @param array $data
-     * @param int $userId
-     * @param int $id
-     * @return void
-     */
-    public function updateExpenseCategory(array $data, int $userId, int $id): void
-    {
-        $this->expenseCategory->where('user_id', $userId)
-            ->where('id', $id)
-            ->update($data);
     }
 
     /**
@@ -92,11 +39,24 @@ class ExpenseRepository
         return $expenses;
     }
 
+    /**
+     * Create a new expense.
+     *
+     * @param array $data
+     * @return void
+     */
     public function createExpense(array $data): void
     {
         $this->expense->create($data);
     }
 
+    /**
+     * Get an expense by id.
+     *
+     * @param int $id
+     * @param int $userId
+     * @return Expense
+     */
     public function getExpense(int $id, int $userId): Expense
     {
         $expense = $this->expense->where('id', $id)
@@ -106,6 +66,14 @@ class ExpenseRepository
         return $expense;
     }
 
+    /**
+     * Update an expense by id.
+     *
+     * @param array $data
+     * @param int $id
+     * @param int $userId
+     * @return void
+     */
     public function updateExpense(array $data, int $id, int $userId): void
     {
         $this->expense->where('id', $id)
@@ -113,6 +81,13 @@ class ExpenseRepository
             ->update($data);
     }
 
+    /**
+     * Delete an expense by id.
+     *
+     * @param int $id
+     * @param int $userId
+     * @return void
+     */
     public function deleteExpense(int $id, int $userId): void
     {
         $expense = $this->expense->where('id', $id)
