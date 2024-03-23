@@ -7,7 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ExpenseCategorySeeder extends Seeder
+class ExpenseTypeSeeder extends Seeder
 {
     /**
      * create and return the default expense categories data.
@@ -17,17 +17,17 @@ class ExpenseCategorySeeder extends Seeder
     private function createData(): array
     {
         $data = [];
-        $categories = config('constants.default_expense_categories', []);
+        $expenseTypes = config('constants.default_expense_types', []);
 
-        foreach ($categories as $category) {
-            $categoryArr = [
+        foreach ($expenseTypes as $expenseType) {
+            $expenseTypeArr = [
                 'user_id' => 1,
-                'name' => $category,
+                'name' => $expenseType,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];
 
-            array_push($data, $categoryArr);
+            array_push($data, $expenseTypeArr);
         }
 
         return $data;
@@ -40,6 +40,6 @@ class ExpenseCategorySeeder extends Seeder
     {
         $data = $this->createData();
 
-        DB::table('expense_categories')->insert($data);
+        DB::table('expense_types')->insert($data);
     }
 }

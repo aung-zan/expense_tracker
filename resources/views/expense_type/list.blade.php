@@ -3,18 +3,18 @@
 @section('content')
     <div class="content__inner">
         <header class="content__title">
-            <h1>Expense Category</h1>
+            <h1>Expense Type</h1>
         </header>
 
         <div class="card">
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <h4 class="card-title">Expense Category List</h4>
+                        <h4 class="card-title">Expense Type List</h4>
                     </div>
                     <div class="col-md-9">
                         <div class="form-group text-right">
-                            <a href="{{ route('expenseCategoryCreate') }}" class="btn btn-info">Add New Expense Category</a>
+                            <a href="{{ route('expenseTypeCreate') }}" class="btn btn-info">Add New Expense Type</a>
                         </div>
                     </div>
                 </div>
@@ -23,16 +23,16 @@
                     <table class="table" id="table">
                         <thead>
                             <tr>
-                                <th>Expense Category Name</th>
+                                <th>Expense Type Name</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($expenseCategories as $item)
+                            @foreach ($expenseTypes as $item)
                                 <tr>
                                     <td>{{ $item['name'] }}</td>
                                     <td>
-                                        <a href="{{ route('expenseCategoryEdit', $item['id']) }}"
+                                        <a href="{{ route('expenseTypeEdit', $item['id']) }}"
                                             class="btn btn-warning btn--icon-text"
                                         >
                                             <i class="zmdi zmdi-edit"></i>
@@ -54,5 +54,5 @@
 @endpush
 
 @push('js')
-    <script src="/js/app/expense_category/list.js"></script>
+    <script src="/js/app/expense_type/list.js"></script>
 @endpush

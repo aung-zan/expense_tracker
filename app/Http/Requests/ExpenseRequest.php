@@ -22,7 +22,7 @@ class ExpenseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'expense_category_id' => 'required|integer',
+            'expense_type_id' => 'required|integer',
             'name' => 'required|max:255',
             'amount' => 'required|integer',
             'expense_date' => 'required',

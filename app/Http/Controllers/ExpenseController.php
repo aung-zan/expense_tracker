@@ -39,10 +39,10 @@ class ExpenseController extends Controller
     {
         $userId = auth()->user()->id;
 
-        $expenseCategory = $this->expenseRepository->getAllExpenseCategory($userId);
+        $expenseTypes = $this->expenseRepository->getAllExpenseTypes($userId);
 
         return view('expense.create', [
-            'expenseCategory' => $expenseCategory,
+            'expenseTypes' => $expenseTypes,
         ]);
     }
 
@@ -67,7 +67,7 @@ class ExpenseController extends Controller
     {
         $userId = auth()->user()->id;
 
-        $expenseCategory = $this->expenseRepository->getAllExpenseCategory($userId);
+        $expenseCategory = $this->expenseRepository->getAllExpenseTypes($userId);
         $expense = $this->expenseRepository->getExpense($id, $userId);
 
         return view('expense.edit', [

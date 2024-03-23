@@ -22,7 +22,7 @@ class IncomeTypeController extends Controller
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
 
-        this->incomeRepository->createNewIncomeType($data);
+        $this->incomeRepository->createNewIncomeType($data);
 
         return response()->json(['message' => 'successfully created.'], 200);
     }

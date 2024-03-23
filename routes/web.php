@@ -75,16 +75,16 @@ Route::prefix('/')->group(function () {
             });
         });
 
-        Route::prefix('expense_category')->group(function () {
-            Route::controller(ExpenseCategoryController::class)->group(function () {
-                Route::get('list', 'list')->name('expenseCategoryList');
-                Route::get('create', 'create')->name('expenseCategoryCreate');
-                Route::post('create', 'store')->name('expenseCategoryStore');
+        Route::prefix('expense_type')->group(function () {
+            Route::controller(ExpenseTypeController::class)->group(function () {
+                Route::get('list', 'list')->name('expenseTypeList');
+                Route::get('create', 'create')->name('expenseTypeCreate');
+                Route::post('create', 'store')->name('expenseTypeStore');
 
                 Route::prefix('{expense_category_id}')->group(function () {
-                    Route::get('edit', 'edit')->name('expenseCategoryEdit');
-                    Route::put('update', 'update')->name('expenseCategoryUpdate');
-                    Route::delete('delete', 'destroy')->name('expenseCategoryDelete');
+                    Route::get('edit', 'edit')->name('expenseTypeEdit');
+                    Route::put('update', 'update')->name('expenseTypeUpdate');
+                    Route::delete('delete', 'destroy')->name('expenseTypeDelete');
                 });
             });
         });

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained(table: 'users');
-            $table->foreignId('expense_category_id')->constrained(table: 'expense_categories');
+            $table->foreignId('expense_type_id')->constrained(table: 'expense_types');
             $table->string('name', 255);
             $table->integer('amount');
             $table->string('expense_date');

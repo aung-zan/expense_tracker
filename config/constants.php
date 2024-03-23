@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'default_expense_categories' => [
+    'default_expense_types' => [
         'Groceries',
         'Transportation',
         'Utilities',
@@ -29,11 +29,11 @@ return [
             ]
         ],
         [
-            'name' => 'Expense Category',
+            'name' => 'Expense Type',
             'icon' => 'zmdi zmdi-tag',
-            'route_name' => 'expenseCategoryList',
+            'route_name' => 'expenseTypeList',
             'child_routes' => [
-                'expenseCategoryList', 'expenseCategoryCreate', 'expenseCategoryEdit'
+                'expenseTypeList', 'expenseTypeCreate', 'expenseTypeEdit'
             ]
         ],
     ],

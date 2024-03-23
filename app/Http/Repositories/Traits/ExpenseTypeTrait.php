@@ -3,9 +3,9 @@
 namespace App\Http\Repositories\Traits;
 
 use Illuminate\Database\Eloquent\Collection;
-use App\Models\ExpenseCategory;
+use App\Models\ExpenseType;
 
-trait ExpenseCategoryTrait
+trait ExpenseTypeTrait
 {
     /**
      * Get all expense_type.
@@ -13,12 +13,12 @@ trait ExpenseCategoryTrait
      * @param int $userId
      * @return Collection
      */
-    public function getAllExpenseCategory(int $userId): Collection
+    public function getAllExpenseTypes(int $userId): Collection
     {
-        $expenseCategories = $this->expenseCategory->where('user_id', $userId)
+        $expenseTypes = $this->expenseType->where('user_id', $userId)
             ->get();
 
-        return $expenseCategories;
+        return $expenseTypes;
     }
 
     /**
@@ -27,9 +27,9 @@ trait ExpenseCategoryTrait
      * @param array $data
      * @return void
      */
-    public function createExpenseCategory(array $data): void
+    public function createExpenseType(array $data): void
     {
-        $this->expenseCategory->create($data);
+        $this->expenseType->create($data);
     }
 
     /**
@@ -37,15 +37,15 @@ trait ExpenseCategoryTrait
      *
      * @param int $userId
      * @param int $id
-     * @return ExpenseCategory
+     * @return ExpenseType
      */
-    public function getExpenseCategory(int $userId, int $id): ExpenseCategory
+    public function getExpenseType(int $userId, int $id): ExpenseType
     {
-        $expenseCategory = $this->expenseCategory->where('user_id', $userId)
+        $expenseType = $this->expenseType->where('user_id', $userId)
             ->where('id', $id)
             ->firstOrFail();
 
-        return $expenseCategory;
+        return $expenseType;
     }
 
     /**
@@ -56,9 +56,9 @@ trait ExpenseCategoryTrait
      * @param int $id
      * @return void
      */
-    public function updateExpenseCategory(array $data, int $userId, int $id): void
+    public function updateExpenseType(array $data, int $userId, int $id): void
     {
-        $this->expenseCategory->where('user_id', $userId)
+        $this->expenseType->where('user_id', $userId)
             ->where('id', $id)
             ->update($data);
     }

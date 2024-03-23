@@ -2,22 +2,22 @@
 
 namespace App\Http\Repositories;
 
-use App\Http\Repositories\Traits\ExpenseCategoryTrait;
+use App\Http\Repositories\Traits\ExpenseTypeTrait;
 use App\Models\Expense;
-use App\Models\ExpenseCategory;
+use App\Models\ExpenseType;
 use Illuminate\Database\Eloquent\Collection;
 
 class ExpenseRepository
 {
-    use ExpenseCategoryTrait;
+    use ExpenseTypeTrait;
 
     private $expense;
-    private $expenseCategory;
+    private $expenseType;
 
-    public function __construct(Expense $expense, ExpenseCategory $expenseCategory)
+    public function __construct(Expense $expense, ExpenseType $expenseType)
     {
         $this->expense = $expense;
-        $this->expenseCategory = $expenseCategory;
+        $this->expenseType = $expenseType;
     }
 
     /**
@@ -26,14 +26,14 @@ class ExpenseRepository
     public function getAllExpense(int $userId, string $date): Collection
     {
         $expenses = $this->expense->leftJoin(
-            'expense_categories',
-            'expenses.expense_category_id',
+            'expense_types',
+            'expenses.expense_type_id',
             '=',
-            'expense_categories.id'
+            'expense_types.id'
         )
             ->where('expenses.user_id', $userId)
             ->where('expense_date', $date)
-            ->select('expenses.*', 'expense_categories.name as category')
+            ->select('expenses.*', 'expense_types.name as type')
             ->get();
 
         return $expenses;
