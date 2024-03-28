@@ -24,7 +24,7 @@
                             <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i></span>
                             <div class="form-group">
                                 <input type="text" class="form-control" name="income_date" value="{{ $date }}"
-                                    id="datePicker" placeholder="Pick a date">
+                                    id="date-picker" placeholder="Pick a date">
                                 <i class="form-group__bar"></i>
                             </div>
                         </div>

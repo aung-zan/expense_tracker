@@ -14,48 +14,39 @@
                 @csrf
 
                 <div class="form-group">
-                    @php
-                        $nameClass = 'form-control';
-                        if ($errors->has('name')) {
-                            $nameClass = 'form-control is-invalid';
-                        }
-                    @endphp
-                    <input type="text" class="{{ $nameClass }}" name="name" placeholder="Name">
-                    @if ($errors->has('name'))
+                    <input type="text" name="name"
+                        placeholder="Name"
+                        class="form-control @error('name') is-invalid @enderror"
+                    >
+                    @error('name')
                         <div class="invalid-feedback text-left">
-                            {{ $errors->first('name') }}
+                            {{ $message }}
                         </div>
-                    @endif
+                    @enderror
                 </div>
 
                 <div class="form-group form-group--centered">
-                    @php
-                        $emailClass = 'form-control';
-                        if ($errors->has('email')) {
-                            $emailClass = 'form-control is-invalid';
-                        }
-                    @endphp
-                    <input type="text" class="{{ $emailClass }}" name="email" placeholder="Email Address">
-                    @if ($errors->has('email'))
+                    <input type="text" name="email"
+                        placeholder="Email Address"
+                        class="form-control @error('email') is-invalid @enderror"
+                    >
+                    @error('email')
                         <div class="invalid-feedback text-left">
-                            {{ $errors->first('email') }}
+                            {{ $message }}
                         </div>
-                    @endif
+                    @enderror
                 </div>
 
                 <div class="form-group form-group--centered">
-                    @php
-                        $passwordClass = 'form-control';
-                        if ($errors->has('password')) {
-                            $passwordClass = 'form-control is-invalid';
-                        }
-                    @endphp
-                    <input type="password" class="{{ $passwordClass }}" name="password" placeholder="Password">
-                    @if ($errors->has('password'))
+                    <input type="password" name="password"
+                        placeholder="Password"
+                        class="form-control @error('password') is-invalid @enderror"
+                    >
+                    @error('password')
                         <div class="invalid-feedback text-left">
-                            {{ $errors->first('password') }}
+                            {{ $message }}
                         </div>
-                    @endif
+                    @enderror
                 </div>
 
                 <div class="form-group">
