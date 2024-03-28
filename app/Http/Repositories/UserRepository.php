@@ -19,7 +19,7 @@ class UserRepository
      * @param array $data
      * @return App\Models\User
      */
-    public function createUser($data): User
+    public function createUser(array $data): User
     {
         $user = $this->user->create($data);
 

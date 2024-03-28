@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  $("#datePicker").flatpickr({
+  $("#date-picker").flatpickr({
     enableTime: false,
     nextArrow: '<i class="zmdi zmdi-long-arrow-right" />',
     prevArrow: '<i class="zmdi zmdi-long-arrow-left" />',

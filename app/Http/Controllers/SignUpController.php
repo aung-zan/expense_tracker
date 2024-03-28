@@ -16,14 +16,21 @@ class SignUpController extends Controller
         $this->userRepository = $userRepository;
     }
 
+
+    /**
+     * Display the sign up form.
+     */
     public function signUpForm()
     {
         return view('authentication.signup');
     }
 
+    /**
+     * Store a new user.
+     */
     public function signUp(SignUpRequest $request)
     {
-        $data = $request->except('_token');
+        $data = $request->validated();
 
         $user = $this->userRepository->createUser($data);
 

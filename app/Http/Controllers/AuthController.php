@@ -7,14 +7,20 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    /**
+     * Display the login form.
+     */
     public function loginForm()
     {
         return view('authentication.login');
     }
 
+    /**
+     * Authenticating credentials with default guard.
+     */
     public function login(LoginRequest $request)
     {
-        $credentails = $request->except('_token');
+        $credentails = $request->validated();
 
         $result = Auth::attempt($credentails);
 
@@ -37,6 +43,9 @@ class AuthController extends Controller
         //
     }
 
+    /**
+     * Logout.
+     */
     public function logout()
     {
         Auth::logout();

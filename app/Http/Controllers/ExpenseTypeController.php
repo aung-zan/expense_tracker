@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Repositories\ExpenseRepository;
-use App\Http\Requests\ExpenseCategoryRequest;
+use App\Http\Requests\ExpenseTypeRequest;
 
-class ExpenseCategoryController extends Controller
+class ExpenseTypeController extends Controller
 {
     private $expenseRepository;
 
@@ -20,10 +20,10 @@ class ExpenseCategoryController extends Controller
     public function list()
     {
         $userId = auth()->user()->id;
-        $expenseCategories = $this->expenseRepository->getAllExpenseCategory($userId);
+        $expenseTypes = $this->expenseRepository->getAllExpenseTypes($userId);
 
-        return view('expense_category.list', [
-            'expenseCategories' => $expenseCategories,
+        return view('expense_type.list', [
+            'expenseTypes' => $expenseTypes,
         ]);
     }
 
@@ -32,20 +32,20 @@ class ExpenseCategoryController extends Controller
      */
     public function create()
     {
-        return view('expense_category.create');
+        return view('expense_type.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ExpenseCategoryRequest $request)
+    public function store(ExpenseTypeRequest $request)
     {
         $data = $request->validated();
         $data['user_id'] = auth()->user()->id;
 
-        $this->expenseRepository->createExpenseCategory($data);
+        $this->expenseRepository->createExpenseType($data);
 
-        return redirect()->route('expenseCategoryList');
+        return redirect()->route('expenseTypeList');
     }
 
     /**
@@ -54,25 +54,25 @@ class ExpenseCategoryController extends Controller
     public function edit(int $id)
     {
         $userId = auth()->user()->id;
-        $expenseCategory = $this->expenseRepository->getExpenseCategory($userId, $id);
+        $expenseType = $this->expenseRepository->getExpenseType($userId, $id);
 
-        return view('expense_category.edit', [
-            'expenseCategory' => $expenseCategory,
+        return view('expense_type.edit', [
+            'expenseType' => $expenseType,
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ExpenseCategoryRequest $request, int $id)
+    public function update(ExpenseTypeRequest $request, int $id)
     {
         $userId = auth()->user()->id;
 
         $data = $request->validated();
 
-        $this->expenseRepository->updateExpenseCategory($data, $userId, $id);
+        $this->expenseRepository->updateExpenseType($data, $userId, $id);
 
-        return redirect()->route('expenseCategoryList');
+        return redirect()->route('expenseTypeList');
     }
 
     /**

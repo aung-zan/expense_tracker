@@ -33,16 +33,18 @@
                     @csrf
 
                     <div class="row">
-                        <label class="col-sm-2 col-form-label">Expense Category</label>
+                        <label class="col-sm-2 col-form-label">Expense Types</label>
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <select class="select2 @error('expense_category_id') is-invalid  @enderror"
-                                    name="expense_category_id" id="expense_category_id">
-                                    @foreach ($expenseCategory as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                <select class="select2 @error('expense_type_id') is-invalid  @enderror"
+                                    name="expense_type_id" id="expense-type-id">
+                                    @foreach ($expenseTypes as $expenseType)
+                                        <option value="{{ $expenseType['id'] }}"
+                                            {{ $expenseType['id'] == old('expense_type_id') }}
+                                        >{{ $expenseType['name'] }}</option>
                                     @endforeach
                                 </select>
-                                @error('expense_category_id')
+                                @error('expense_type_id')
                                     <div class="invalid-feedback text-left">
                                         {{ $message }}
                                     </div>
@@ -58,7 +60,7 @@
                                 <input type="text" name="name"
                                     class="form-control @error('name') is-invalid  @enderror"
                                     placeholder="Expense Name"
-                                    value="{{ old('name', '') }}"
+                                    value="{{ old('name') }}"
                                 >
                                 @error('amount')
                                     <div class="invalid-feedback text-left">
@@ -79,7 +81,7 @@
                                         <input type="number" name="amount"
                                             class="form-control @error('amount') is-invalid  @enderror"
                                             placeholder="Expense Amount"
-                                            value="{{ old('amount', '') }}"
+                                            value="{{ old('amount') }}"
                                         >
                                     </div>
                                 </div>
@@ -103,7 +105,7 @@
                                             class="form-control @error('expense_date') is-invalid  @enderror"
                                             name="expense_date" id="datePicker"
                                             placeholder="Pick a date"
-                                            value="{{ old('expense_date', '') }}"
+                                            value="{{ old('expense_date') }}"
                                         >
                                         <i class="form-group__bar"></i>
                                     </div>

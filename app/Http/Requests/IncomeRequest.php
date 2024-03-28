@@ -31,20 +31,36 @@ class IncomeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'income_id' => 'integer',
-            'name' => 'max:255|unique:incomes,name',
+            'income_type_id' => 'required|integer',
             'amount' => 'required|integer',
             'income_date' => 'required',
         ];
     }
 
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'income_type_id' => 'income type',
+        ];
+    }
+
+    /**
+     * Custom validation after the validation rules.
+     *
+     * @return array
+     */
     public function after(): array
     {
         return [
             function (Validator $validator) {
                 $data = $this->validationData();
 
-                if (array_key_exists('income_id', $data) && $this->checkIncomeCreated($data)) {
+                if ($this->incomeDuplicate($data)) {
                     $validator->errors()->add(
                         'income',
                         'The income is already created.'
@@ -54,12 +70,24 @@ class IncomeRequest extends FormRequest
         ];
     }
 
-    private function checkIncomeCreated($data): bool
+    /**
+     * Custom validation: check income duplicate.
+     *
+     * @param array $data
+     * @return bool
+     */
+    private function incomeDuplicate($data): bool
     {
-        $incomeId = $data['income_id'];
-        $incomeDate = $data['income_date'];
+        // $userId = auth()->user()->id;
+        // $incomeTypeId = $data['income_type_id'];
+        // $incomeDate = $data['income_date'];
+        $data['user_id'] = auth()->user()->id;
 
-        $income = $this->incomeRepository->getIncomeByIdAndDate($incomeId, $incomeDate);
+        if ($this->route('income_id')) {
+            $data['income_id'] = $this->route('income_id');
+        }
+
+        $income = $this->incomeRepository->getIncomeByIdAndDate($data);
 
         return !is_null($income);
     }

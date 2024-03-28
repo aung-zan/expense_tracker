@@ -9,47 +9,40 @@
             Hi there! Please Sign in
         </div>
 
-        @if (session('auth'))
-            <div class="alert alert-danger alert-dismissible fade show">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-                {{ session('auth') }}
-            </div>
-        @endif
+        @error('auth')
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            {{ $message }}
+        @enderror
 
         <div class="login__block__body">
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="form-group">
-                    @php
-                        $emailClass = 'form-control';
-                        if ($errors->has('email')) {
-                            $emailClass = 'form-control is-invalid';
-                        }
-                    @endphp
-                    <input type="text" class="{{ $emailClass }}" name="email" placeholder="Email Address"
-                        value="{{ old('email', '') }}">
-                    @if ($errors->has('email'))
+                    <input type="text" name="email"
+                        placeholder="Email Address"
+                        value="{{ old('email', '') }}"
+                        class="form-control @error('email') is-invalid @enderror"
+                    >
+                    @error('email')
                         <div class="invalid-feedback text-left">
-                            {{ $errors->first('email') }}
+                            {{ $message }}
                         </div>
-                    @endif
+                    @enderror
                 </div>
 
                 <div class="form-group">
-                    @php
-                        $passwordClass = 'form-control';
-                        if ($errors->has('password')) {
-                            $passwordClass = 'form-control is-invalid';
-                        }
-                    @endphp
-                    <input type="password" class="{{ $passwordClass }}" name="password" placeholder="Password">
-                    @if ($errors->has('password'))
+                    <input type="password" name="password"
+                        placeholder="Password"
+                        class="form-control @error('password') is-invalid @enderror"
+                    >
+                    @error('password')
                         <div class="invalid-feedback text-left">
-                            {{ $errors->first('password') }}
+                            {{ $message }}
                         </div>
-                    @endif
+                    @enderror
                 </div>
 
                 <div class="form-group text-right">

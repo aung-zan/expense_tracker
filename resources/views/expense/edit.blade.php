@@ -20,14 +20,14 @@
             <div class="card-body">
                 <h4 class="card-title">Expense</h4>
 
-                @if ($errors->has('expense'))
+                @error('expense')
                     <div class="alert alert-danger alert-dismissible fade show col-sm-7">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
-                        {{ $errors->first('expense') }}
+                        {{ $message }}
                     </div>
-                @endif
+                @enderror
 
                 <form action="{{ route('expenseUpdate', $expense['id']) }}" method="POST">
                     @csrf
@@ -37,17 +37,17 @@
                         <label class="col-sm-2 col-form-label">Expense Category</label>
                         <div class="col-sm-5">
                             <div class="form-group">
-                                <select class="select2 @error('expense_category_id') is-invalid  @enderror"
-                                    name="expense_category_id" id="expense_category_id">
+                                <select class="select2 @error('expense_type_id') is-invalid  @enderror"
+                                    name="expense_type_id" id="expense_type_id">
                                     @foreach ($expenseCategory as $item)
                                         <option value="{{ $item['id'] }}"
-                                            {{ $item['id'] === $expense['expense_category_id'] ? 'selected' : '' }}
+                                            {{ $item['id'] == $expense['expense_type_id'] ? 'selected' : '' }}
                                         >
                                             {{ $item['name'] }}
                                         </option>
                                     @endforeach
                                 </select>
-                                @error('expense_category_id')
+                                @error('expense_type_id')
                                     <div class="invalid-feedback text-left">
                                         {{ $message }}
                                     </div>

@@ -45,7 +45,7 @@
                                 <th>Expense name</th>
                                 <th>Expense amount</th>
                                 <th>Expense date</th>
-                                <th>Expense Category</th>
+                                <th>Expense type</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -55,7 +55,7 @@
                                     <td>{{ $expense['name'] }}</td>
                                     <td>{{ $expense['amount'] }}</td>
                                     <td>{{ $expense['expense_date'] }}</td>
-                                    <td>{{ $expense['category'] }}</td>
+                                    <td>{{ $expense['type'] }}</td>
                                     <td class="table-button-center">
                                         <a href="{{ route('expenseEdit', $expense['id']) }}"
                                             class="btn btn-warning btn--icon-text mr-2">
