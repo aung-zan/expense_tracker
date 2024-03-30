@@ -22,6 +22,10 @@ class ExpenseRepository
 
     /**
      * Get all expenses.
+     *
+     * @param int $userId
+     * @param string $date
+     * @return Collection
      */
     public function getAllExpense(int $userId, string $date): Collection
     {
@@ -95,5 +99,30 @@ class ExpenseRepository
             ->firstOrFail();
 
         $expense->delete();
+    }
+
+    /**
+     * Get all expense amount group by expense type.
+     *
+     * @param int $userId
+     * @param string $date
+     * @return Collection
+     */
+    public function getExpenseAmountByExpenseType(int $userId, string $date): Collection
+    {
+        $expenses = $this->expense->leftJoin(
+            'expense_types',
+            'expenses.expense_type_id',
+            '=',
+            'expense_types.id'
+        )
+        ->where('expenses.user_id', $userId)
+        ->where('expense_date', $date)
+        ->selectRaw('expense_types.name, sum(amount) as expense_amount')
+        ->groupBy('expense_types.name')
+        ->orderBy('expense_amount', 'DESC')
+        ->get();
+
+        return $expenses;
     }
 }
