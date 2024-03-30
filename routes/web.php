@@ -34,6 +34,7 @@ Route::prefix('/')->group(function () {
     Route::middleware('auth')->group(function () {
         Route::controller(DashboardController::class)->group(function () {
             Route::get('dashboard', 'dashboard')->name('dashboard');
+            Route::get('dashboard_data', 'getDashboardData')->name('dashboardData');
         });
 
         Route::prefix('income_type')->group(function () {
